@@ -93,11 +93,27 @@ export const Single = () => {
                 ? "Planet"
                 : "Vehicle";
 
+    // Descripción breve de cada tipo de entidad
+    let description = "";
+
+    if (type === "people") {
+        description = `${properties.name} is a Star Wars character. This character is ${properties.gender || "of unknown gender"}, with ${properties.hair_color || "unknown"} hair and ${properties.eye_color || "unknown"} eyes.`;
+    }
+
+    if (type === "planets") {
+        description = `${properties.name} is a planet in the Star Wars universe. Its climate is ${properties.climate || "unknown"} and its terrain is described as ${properties.terrain || "unknown"}.`;
+    }
+
+    if (type === "vehicles") {
+        description = `${properties.name} is a vehicle from the Star Wars universe. Its model is ${properties.model || "unknown"}, manufactured by ${properties.manufacturer || "unknown"}, and classified as ${properties.vehicle_class || "unknown"}.`;
+    }
+
     const visibleProperties = Object.entries(
         properties
     ).filter(
         ([key, value]) =>
             key !== "url" &&
+            key !== "name" &&
             !Array.isArray(value) &&
             typeof value !== "object"
     );
@@ -105,6 +121,7 @@ export const Single = () => {
     return (
         <div className="container py-5">
 
+            {/* BACK BUTTON */}
             <Link
                 to="/"
                 className="btn btn-outline-secondary mb-4"
@@ -112,6 +129,7 @@ export const Single = () => {
                 ← Back to home
             </Link>
 
+            {/* MAIN CARD */}
             <div className="card shadow-lg border-0 overflow-hidden">
 
                 <div className="row g-0">
@@ -133,7 +151,7 @@ export const Single = () => {
                         />
                     </div>
 
-                    {/* INFORMATION */}
+                    {/* DESCRIPTION */}
                     <div className="col-md-7">
 
                         <div className="card-body p-4 p-lg-5">
@@ -146,38 +164,44 @@ export const Single = () => {
                                 {properties.name}
                             </h1>
 
-                            <p className="text-muted mb-4">
-                                Detailed information about{" "}
-                                {properties.name}.
+                            <p className="text-muted lh-lg">
+                                {description}
                             </p>
 
-                            <hr />
-
-                            <div className="row mt-4">
-
-                                {visibleProperties.map(
-                                    ([key, value]) => (
-                                        <div
-                                            className="col-md-6 mb-4"
-                                            key={key}
-                                        >
-                                            <small className="text-uppercase text-muted fw-bold">
-                                                {key.replaceAll(
-                                                    "_",
-                                                    " "
-                                                )}
-                                            </small>
-
-                                            <div className="mt-1">
-                                                {value || "unknown"}
-                                            </div>
-                                        </div>
-                                    )
-                                )}
-
-                            </div>
-
                         </div>
+
+                    </div>
+
+                </div>
+
+                {/* DETAILS */}
+                <div className="card-body border-top p-4 p-lg-5">
+
+                    <h3 className="mb-4">
+                        Details
+                    </h3>
+
+                    <div className="row">
+
+                        {visibleProperties.map(
+                            ([key, value]) => (
+                                <div
+                                    className="col-md-4 mb-4"
+                                    key={key}
+                                >
+                                    <small className="text-uppercase text-muted fw-bold">
+                                        {key.replaceAll(
+                                            "_",
+                                            " "
+                                        )}
+                                    </small>
+
+                                    <div className="mt-1">
+                                        {value || "unknown"}
+                                    </div>
+                                </div>
+                            )
+                        )}
 
                     </div>
 
